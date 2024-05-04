@@ -1,0 +1,41 @@
+{
+  "name": "routing-controllers-swagger-example",
+  "description": "Simple REST API example with class-based controllers and Swagger documentation.",
+  "version": "0.0.1",
+  "author": "e22m4u <e22m4u@yandex.ru>",
+  "license": "MIT",
+  "keywords": [
+    "rest",
+    "api",
+    "swagger",
+    "openapi",
+    "typescript",
+    "decorators",
+    "documentation",
+    "express",
+    "server"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "prestart": "tsc",
+    "start": "node ."
+  },
+  "dependencies": {
+    "@e22m4u/ts-openapi": "^0.0.4",
+    "body-parser": "^1.20.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "express": "^4.19.2",
+    "http-errors": "^2.0.0",
+    "multer": "^1.4.5-lts.1",
+    "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.10.4"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^4.17.21",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.12.8",
+    "typescript": "^5.4.5"
+  }
+}
