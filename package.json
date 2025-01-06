@@ -1,6 +1,6 @@
 {
   "name": "routing-controllers-swagger-example",
-  "description": "Simple REST API example with class-based controllers and Swagger documentation.",
+  "description": "A simple REST API example with class-based controllers and Swagger documentation.",
   "version": "0.0.1",
   "author": "e22m4u <e22m4u@yandex.ru>",
   "license": "MIT",
