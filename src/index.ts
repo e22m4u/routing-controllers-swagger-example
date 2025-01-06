@@ -1,11 +1,18 @@
 import 'reflect-metadata';
-import {createExpressServer} from 'routing-controllers';
-import {OADocumentBuilder} from '@e22m4u/ts-openapi';
-import * as controllers from './controllers';
-import {Request, Response} from 'express';
 import express from 'express';
+import {Request} from 'express';
+import {Response} from 'express';
+import bodyParser from 'body-parser';
+import * as controllers from './controllers';
+import {useExpressServer} from 'routing-controllers';
+import {OADocumentBuilder} from '@e22m4u/ts-openapi';
 
-const app = createExpressServer({
+const server = express();
+
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+
+const app = useExpressServer(server, {
   controllers: Object.values(controllers),
 });
 

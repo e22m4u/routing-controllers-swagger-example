@@ -1,25 +1,30 @@
 import {
-  Body,
-  Controller,
-  Delete,
   Get,
-  Param,
+  Body,
   Post,
+  Param,
   Patch,
+  Delete,
+  Controller,
 } from 'routing-controllers';
 import {
-  OATag,
-  OAOperation,
-  OAOperationMethod,
-  OAResponse,
-  OAMediaType,
+  oaTag,
+  oaResponse,
+  oaParameter,
+  oaOperation,
+  oaRequestBody,
   OADataType,
+  OAMediaType,
   OASchemaObject,
+  OAOperationMethod,
   OAParameterLocation,
-  OAParameter,
-  OARequestBody
 } from '@e22m4u/ts-openapi';
-import createHttpError from 'http-errors';
+
+type Role = {
+  id?: number;
+  name?: string;
+  roleId?: number;
+}
 
 const ROLE_SCHEMA: OASchemaObject = {
   type: OADataType.OBJECT,
@@ -29,14 +34,14 @@ const ROLE_SCHEMA: OASchemaObject = {
   }
 };
 
-@OATag()
+@oaTag()
 @Controller()
 export class RoleController {
-  @OAOperation({
-    method: OAOperationMethod.POST,
+  @oaOperation({
+    method: OAOperationMethod.GET,
     path: '/roles',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -47,14 +52,18 @@ export class RoleController {
   })
   @Get('/roles')
   find() {
-    throw createHttpError.NotImplemented();
+    return [
+      {id: 1, name: 'admin'},
+      {id: 2, name: 'manager'},
+      {id: 3, name: 'user'},
+    ];
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.GET,
     path: '/roles/{id}',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -62,7 +71,7 @@ export class RoleController {
   })
   @Get('/roles/:id')
   findById(
-    @OAParameter({
+    @oaParameter({
       name: 'id',
       in: OAParameterLocation.PATH,
       schema: {type: OADataType.NUMBER},
@@ -70,14 +79,14 @@ export class RoleController {
     @Param('id')
     id: number
   ) {
-    throw createHttpError.NotImplemented();
+    return {id, name: 'user'};
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.POST,
     path: '/roles',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -85,21 +94,21 @@ export class RoleController {
   })
   @Post('/roles')
   create(
-    @OARequestBody({
+    @oaRequestBody({
       mediaType: OAMediaType.APPLICATION_JSON,
       schema: ROLE_SCHEMA,
     })
     @Body()
-    role: object,
+    role: Role,
   ) {
-    throw createHttpError.NotImplemented();
+    return role;
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.PATCH,
     path: '/roles/{id}',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -107,28 +116,29 @@ export class RoleController {
   })
   @Patch('/roles/:id')
   updateById(
-    @OAParameter({
+    @oaParameter({
       name: 'id',
       in: OAParameterLocation.PATH,
       schema: {type: OADataType.NUMBER},
     })
     @Param('id')
     id: number,
-    @OARequestBody({
+    @oaRequestBody({
       mediaType: OAMediaType.APPLICATION_JSON,
       schema: ROLE_SCHEMA,
     })
     @Body()
-    role: object,
+    role: Role,
   ) {
-    throw createHttpError.NotImplemented();
+    delete role.id;
+    return {id, ...role};
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.DELETE,
     path: '/roles/{id}',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -141,7 +151,7 @@ export class RoleController {
   })
   @Delete('/roles/:id')
   remove(
-    @OAParameter({
+    @oaParameter({
       name: 'id',
       in: OAParameterLocation.PATH,
       schema: {type: OADataType.NUMBER},
@@ -149,6 +159,6 @@ export class RoleController {
     @Param('id')
     id: number,
   ) {
-    throw createHttpError.NotImplemented();
+    return {count: 1};
   }
 }

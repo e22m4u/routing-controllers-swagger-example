@@ -1,25 +1,30 @@
 import {
-  Body,
-  Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
+  Body,
   Post,
+  Patch,
+  Param,
+  Delete,
+  Controller,
 } from 'routing-controllers';
 import {
+  oaTag,
+  oaResponse,
+  oaOperation,
+  oaParameter,
+  oaRequestBody,
   OADataType,
   OAMediaType,
-  OAOperation,
-  OAOperationMethod,
-  OAParameter,
-  OAParameterLocation,
-  OARequestBody,
-  OAResponse,
   OASchemaObject,
-  OATag
+  OAOperationMethod,
+  OAParameterLocation,
 } from '@e22m4u/ts-openapi';
-import createHttpError from 'http-errors';
+
+type User = {
+  id?: number;
+  name?: string;
+  roleId?: number;
+}
 
 const USER_SCHEMA: OASchemaObject = {
   type: OADataType.OBJECT,
@@ -30,14 +35,14 @@ const USER_SCHEMA: OASchemaObject = {
   }
 };
 
-@OATag()
+@oaTag()
 @Controller()
 export class UserController {
-  @OAOperation({
-    method: OAOperationMethod.POST,
+  @oaOperation({
+    method: OAOperationMethod.GET,
     path: '/users',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -48,14 +53,18 @@ export class UserController {
   })
   @Get('/users')
   find() {
-    throw createHttpError.NotImplemented();
+    return [
+      {id: 1, name: 'John Doe', roleId: 3},
+      {id: 2, name: 'Mario Rossi', roleId: 2},
+      {id: 3, name: 'Richard Roe', roleId: 1},
+    ];
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.GET,
     path: '/users/{id}',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -63,7 +72,7 @@ export class UserController {
   })
   @Get('/users/:id')
   findById(
-    @OAParameter({
+    @oaParameter({
       name: 'id',
       in: OAParameterLocation.PATH,
       schema: {type: OADataType.NUMBER},
@@ -71,14 +80,14 @@ export class UserController {
     @Param('id')
     id: number
   ) {
-    throw createHttpError.NotImplemented();
+    return {id, name: 'John Doe', roleId: 3};
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.POST,
     path: '/users',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -86,21 +95,21 @@ export class UserController {
   })
   @Post('/users')
   create(
-    @OARequestBody({
+    @oaRequestBody({
       mediaType: OAMediaType.APPLICATION_JSON,
       schema: USER_SCHEMA,
     })
     @Body()
-    user: object,
+    user: User,
   ) {
-    throw createHttpError.NotImplemented();
+    return user;
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.PATCH,
     path: '/users/{id}',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -108,28 +117,29 @@ export class UserController {
   })
   @Patch('/users/:id')
   updateById(
-    @OAParameter({
+    @oaParameter({
       name: 'id',
       in: OAParameterLocation.PATH,
       schema: {type: OADataType.NUMBER},
     })
     @Param('id')
     id: number,
-    @OARequestBody({
+    @oaRequestBody({
       mediaType: OAMediaType.APPLICATION_JSON,
       schema: USER_SCHEMA,
     })
     @Body()
-    user: object,
+    user: User,
   ) {
-    throw createHttpError.NotImplemented();
+    delete user.id;
+    return {id, ...user};
   }
 
-  @OAOperation({
+  @oaOperation({
     method: OAOperationMethod.DELETE,
     path: '/users/{id}',
   })
-  @OAResponse({
+  @oaResponse({
     statusCode: 200,
     mediaType: OAMediaType.APPLICATION_JSON,
     description: 'Response example',
@@ -142,7 +152,7 @@ export class UserController {
   })
   @Delete('/users/:id')
   remove(
-    @OAParameter({
+    @oaParameter({
       name: 'id',
       in: OAParameterLocation.PATH,
       schema: {type: OADataType.NUMBER},
@@ -150,6 +160,6 @@ export class UserController {
     @Param('id')
     id: number,
   ) {
-    throw createHttpError.NotImplemented();
+    return {count: 1};
   }
 }
