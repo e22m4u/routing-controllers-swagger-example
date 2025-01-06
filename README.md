@@ -1,17 +1,33 @@
-Simple REST API example with [routing-controllers](https://github.com/typestack/routing-controllers) and Swagger documentation via [@e22m4u/ts-openapi](https://github.com/e22m4u/ts-openapi)
+A demo project showing how to build a REST API using
+[routing-controllers](https://github.com/typestack/routing-controllers)
+with integrated Swagger documentation powered by
+[@e22m4u/ts-openapi](https://github.com/e22m4u/ts-openapi)
 
-## Usage
+## Getting Started
 
-Install dependencies.
+1. Clone the repository:
+
+```bash
+git clone https://github.com/e22m4u/routing-controllers-swagger-example
+cd routing-controllers-swagger-example
+```
+
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start the server.
+3. Start the server:
 
 ```bash
 npm start
 ```
 
-Go to [http://localhost:3000/explorer](http://localhost:3000/explorer)
+4. Access the Swagger UI documentation at
+[http://localhost:3000/explorer](http://localhost:3000/explorer)
+
+
+## License
+
+This project is licensed under the MIT License.
